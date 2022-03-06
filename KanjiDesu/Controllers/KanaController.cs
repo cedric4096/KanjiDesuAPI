@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KanjiDesu.Controllers
 {
+	/// <summary>
+	/// Controller for <see cref="Kana"/> management
+	/// </summary>
+	[ApiController]
 	[Route("api/[controller]")]
 	[Produces("application/json")]
-	[ApiController]
 	public class KanaController : ControllerBase
 	{
 		private readonly ILogger<KanaController> logger;
@@ -22,12 +25,12 @@ namespace KanjiDesu.Controllers
 		/// <summary>
 		/// Returns all existing kana
 		/// </summary>
-		/// <param name="difficulty"><see cref="Difficulty"/> of the searched kana</param>
-		/// <param name="search">Romaji <see cref="string"/> to search in kana</param>
-		/// <param name="exclusive">If <see langword="true"/>, returns kana stricly in the specified difficulty, else returns kana in surrounding groups (i.e. if <see cref="Difficulty.Dakuten"/> is provided, returns <see cref="Difficulty.ComposedDakuten"/> kanas too)</param>
-		/// <returns>An <see cref="IEnumerable{T}"/> containing searched <see cref="Kana"/></returns>
+		/// <param name="difficulty">Difficulty of the searched kana</param>
+		/// <param name="search">Romaji string to search in kana</param>
+		/// <param name="exclusive">If true, returns kana stricly in the specified difficulty, else returns kana in surrounding groups (i.e. if Difficulty.Dakuten is provided, returns Difficulty.ComposedDakuten kanas too)</param>
+		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched kana</response>
-		/// <response code="400">If <paramref name="difficulty"/> is invalid, or if <paramref name="difficulty"/> is <see langword="null"/> and <paramref name="exclusive"/> is provided</response>
+		/// <response code="400">If difficulty is invalid, or if difficulty is null and exclusive is provided</response>
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -48,12 +51,12 @@ namespace KanjiDesu.Controllers
 		/// <summary>
 		/// Returns all existing hiragana
 		/// </summary>
-		/// <param name="difficulty"><see cref="Difficulty"/> of the searched hiragana</param>
-		/// <param name="search">Romaji <see cref="string"/> to search in hiragana</param>
-		/// <param name="exclusive">If <see langword="true"/>, returns hiragana stricly in the specified difficulty, else returns hiragana in surrounding groups (i.e. if <see cref="Difficulty.Dakuten"/> is provided, returns <see cref="Difficulty.ComposedDakuten"/> hiraganas too)</param>
-		/// <returns>An <see cref="IEnumerable{T}"/> containing searched <see cref="Kana"/></returns>
+		/// <param name="difficulty">Difficulty of the searched hiragana</param>
+		/// <param name="search">Romaji string to search in hiragana</param>
+		/// <param name="exclusive">If true, returns hiragana stricly in the specified difficulty, else returns hiragana in surrounding groups (i.e. if Difficulty.Dakuten is provided, returns Difficulty.ComposedDakuten hiraganas too)</param>
+		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched hiragana</response>
-		/// <response code="400">If <paramref name="difficulty"/> is invalid, or if <paramref name="difficulty"/> is <see langword="null"/> and <paramref name="exclusive"/> is provided</response>
+		/// <response code="400">If difficulty is invalid, or if difficulty is null and exclusive is provided</response>
 		[HttpGet("hiragana")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -74,12 +77,12 @@ namespace KanjiDesu.Controllers
 		/// <summary>
 		/// Returns all existing katakana
 		/// </summary>
-		/// <param name="difficulty"><see cref="Difficulty"/> of the searched katakana</param>
-		/// <param name="search">Romaji <see cref="string"/> to search in katakana</param>
-		/// <param name="exclusive">If <see langword="true"/>, returns latakana stricly in the specified difficulty, else returns katakana in surrounding groups (i.e. if <see cref="Difficulty.Dakuten"/> is provided, returns <see cref="Difficulty.ComposedDakuten"/> katakanas too)</param>
-		/// <returns>An <see cref="IEnumerable{T}"/> containing searched <see cref="Kana"/></returns>
+		/// <param name="difficulty">Difficulty of the searched katakana</param>
+		/// <param name="search">Romaji string to search in katakana</param>
+		/// <param name="exclusive">If true, returns latakana stricly in the specified difficulty, else returns katakana in surrounding groups (i.e. if Difficulty.Dakuten is provided, returns Difficulty.ComposedDakuten katakanas too)</param>
+		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched katakana</response>
-		/// <response code="400">If <paramref name="difficulty"/> is invalid, or if <paramref name="difficulty"/> is <see langword="null"/> and <paramref name="exclusive"/> is provided</response>
+		/// <response code="400">If difficulty is invalid, or if difficulty is null and exclusive is provided</response>
 		[HttpGet("katakana")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,6 +1,7 @@
 using KanjiDesu.DataModels;
 using KanjiDesu.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
-	c.SwaggerDoc("1.0.0", new() { Title = "KanjiDesu API", Version = "1.0.0", Description = "ASP.NET Core Web API for KanjiDesu" });
+	c.SwaggerDoc("v1", new() { Title = "KanjiDesu API", Version = "1.0.0", Description = "ASP.NET Core Web API for KanjiDesu" });
+	c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 });
 
 var app = builder.Build();

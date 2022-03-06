@@ -3,6 +3,9 @@ using KanjiDesu.Models;
 
 namespace KanjiDesu.Services
 {
+	/// <summary>
+	/// Interface for <see cref="Kana"/> retrieval
+	/// </summary>
 	public interface IKanaService
 	{
 		public IEnumerable<Kana> Get(Difficulty? difficulty, string? search, bool? exclusive);
