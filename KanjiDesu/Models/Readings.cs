@@ -1,14 +1,14 @@
-﻿namespace KanjiDesu.Models
+﻿using KanjiDesu.DataModels;
+
+namespace KanjiDesu.Models
 {
 	public class Readings
 	{
-		public List<string> KanaReadings { get; set; }
-		public List<string> RomajiReadings { get; set; }
+		public List<KeyValuePair<string, string>> ReadingsTranscriptions { get; private set; }
 
-		public Readings()
+		public Readings(List<KeyValuePair<string, string>> readingTranscriptions)
 		{
-			KanaReadings = new List<string>();
-			RomajiReadings = new List<string>();
+			ReadingsTranscriptions = readingTranscriptions;
 		}
 	}
 }

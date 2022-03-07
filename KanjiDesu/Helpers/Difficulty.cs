@@ -6,6 +6,8 @@
 		Dakuten,
 		Composed,
 		ComposedDakuten,
-		Exotic
+		Exotic,
+		LittleCharsAfter = 10,
+		LittleCharsBefore = 11
 	}
 }

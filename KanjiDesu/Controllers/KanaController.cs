@@ -27,7 +27,7 @@ namespace KanjiDesu.Controllers
 		/// </summary>
 		/// <param name="difficulty">Difficulty of the searched kana</param>
 		/// <param name="search">Romaji string to search in kana</param>
-		/// <param name="exclusive">If true, returns kana stricly in the specified difficulty, else returns kana in surrounding groups (i.e. if Difficulty.Dakuten is provided, returns Difficulty.ComposedDakuten kanas too)</param>
+		/// <param name="exclusive">If true, returns kana stricly in the specified difficulty, else returns kana in easier groups</param>
 		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched kana</response>
 		/// <response code="400">If difficulty is invalid, or if difficulty is null and exclusive is provided</response>
@@ -53,7 +53,7 @@ namespace KanjiDesu.Controllers
 		/// </summary>
 		/// <param name="difficulty">Difficulty of the searched hiragana</param>
 		/// <param name="search">Romaji string to search in hiragana</param>
-		/// <param name="exclusive">If true, returns hiragana stricly in the specified difficulty, else returns hiragana in surrounding groups (i.e. if Difficulty.Dakuten is provided, returns Difficulty.ComposedDakuten hiraganas too)</param>
+		/// <param name="exclusive">If true, returns hiragana stricly in the specified difficulty, else returns hiragana in easier groups</param>
 		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched hiragana</response>
 		/// <response code="400">If difficulty is invalid, or if difficulty is null and exclusive is provided</response>
@@ -79,7 +79,7 @@ namespace KanjiDesu.Controllers
 		/// </summary>
 		/// <param name="difficulty">Difficulty of the searched katakana</param>
 		/// <param name="search">Romaji string to search in katakana</param>
-		/// <param name="exclusive">If true, returns latakana stricly in the specified difficulty, else returns katakana in surrounding groups (i.e. if Difficulty.Dakuten is provided, returns Difficulty.ComposedDakuten katakanas too)</param>
+		/// <param name="exclusive">If true, returns latakana stricly in the specified difficulty, else returns katakana in easier groups</param>
 		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched katakana</response>
 		/// <response code="400">If difficulty is invalid, or if difficulty is null and exclusive is provided</response>

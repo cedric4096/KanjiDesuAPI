@@ -11,5 +11,6 @@ namespace KanjiDesu.Services
 		public IEnumerable<Kana> Get(Difficulty? difficulty, string? search, bool? exclusive);
 		public IEnumerable<Kana> GetHiragana(Difficulty? difficulty, string? search, bool? exclusive);
 		public IEnumerable<Kana> GetKatakana(Difficulty? difficulty, string? search, bool? exclusive);
+		public Readings? BuildReadings(string? readings);
 	}
 }
