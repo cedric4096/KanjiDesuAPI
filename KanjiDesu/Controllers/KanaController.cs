@@ -36,7 +36,7 @@ namespace KanjiDesu.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public ActionResult<IEnumerable<Kana>> GetAll([FromQuery] Difficulty? difficulty, [FromQuery] string? search, [FromQuery] bool? exclusive)
 		{
-			if (difficulty != null && difficulty < Difficulty.Simple || difficulty > Difficulty.ComposedDakuten)
+			if (difficulty != null && difficulty < Difficulty.Simple || difficulty > Difficulty.Exotic)
 			{
 				return BadRequest("Invalid group identifier");
 			}
@@ -62,7 +62,7 @@ namespace KanjiDesu.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public ActionResult<IEnumerable<Kana>> GetHiragana([FromQuery] Difficulty? difficulty, [FromQuery] string? search, [FromQuery] bool? exclusive)
 		{
-			if (difficulty != null && difficulty < Difficulty.Simple || difficulty > Difficulty.ComposedDakuten)
+			if (difficulty != null && difficulty < Difficulty.Simple || difficulty > Difficulty.Exotic)
 			{
 				return BadRequest("Invalid group identifier");
 			}
@@ -88,7 +88,7 @@ namespace KanjiDesu.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public ActionResult<IEnumerable<Kana>> GetKatakana([FromQuery] Difficulty? difficulty, [FromQuery] string? search, [FromQuery] bool? exclusive)
 		{
-			if (difficulty != null && difficulty < Difficulty.Simple || difficulty > Difficulty.ComposedDakuten)
+			if (difficulty != null && difficulty < Difficulty.Simple || difficulty > Difficulty.Exotic)
 			{
 				return BadRequest("Invalid group identifier");
 			}

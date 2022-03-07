@@ -5,6 +5,7 @@
 		Simple,
 		Dakuten,
 		Composed,
-		ComposedDakuten
+		ComposedDakuten,
+		Exotic
 	}
 }

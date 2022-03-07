@@ -28,12 +28,8 @@ namespace KanjiDesu.Services
 			return context.Kanas
 				.Where(kana => (
 						difficulty == null
-						|| ((byte)difficulty == 0 && kana.DifficultyGroup == 0)
-						|| ((kana.DifficultyGroup & (byte)difficulty) != 0)
-						&& (
-							((exclusive == null || !(bool)exclusive) && (Difficulty)kana.DifficultyGroup >= difficulty)
-							|| (exclusive != null && (bool)exclusive && (Difficulty)kana.DifficultyGroup == difficulty)
-						)
+						|| ((exclusive == null || !(bool)exclusive) && (Difficulty)kana.DifficultyGroup <= difficulty)
+						|| (exclusive != null && (bool)exclusive && (Difficulty)kana.DifficultyGroup == difficulty)
 					)
 					&& (string.IsNullOrEmpty(search) || kana.Romaji.Contains(search))
 				)
