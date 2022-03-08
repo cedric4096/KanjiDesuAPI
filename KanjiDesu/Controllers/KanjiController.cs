@@ -71,5 +71,17 @@ namespace KanjiDesu.Controllers
 		{
 			return Ok(kanjiService.GetByMeaning(meaning));
 		}
+
+		/// <summary>
+		/// Returns test kanji
+		/// </summary>
+		/// <returns>Kanji</returns>
+		/// <response code="200">Returns the kanji</response>
+		[HttpGet("test")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public ActionResult<Kanji> Test()
+		{
+			return Ok(kanjiService.Test());
+		}
 	}
 }

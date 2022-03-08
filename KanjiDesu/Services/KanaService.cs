@@ -78,11 +78,67 @@ namespace KanjiDesu.Services
 			{
 				IEnumerable<Kana> kanas = GetInWord(reading);
 				string res = "";
+				bool isPreviousLtsu = false;
 				int i = 0;
 
 				while (i < reading.Length)
 				{
+					IEnumerable<Kana> foundForChar = kanas.Where(k => k.Character.Contains(reading[i]));
+					if (foundForChar.Any())
+					{
+						if (foundForChar.Count() == 1) // alone kana or ltsu
+						{
+							Kana found = foundForChar.First();
 
+							if (found.DifficultyGroup == Difficulty.LittleCharsBefore) // ltsu
+							{
+								isPreviousLtsu = true;
+							}
+							else // alone kana
+							{
+								if (isPreviousLtsu)
+								{
+									res += found.Romaji[0];
+									isPreviousLtsu = false;
+								}
+
+								res += found.Romaji;
+							}
+						}
+						else // alone or composed
+						{
+							if (i == reading.Length - 1 || kanas.Where(k => k.Character == $"{reading[i+1]}").First().DifficultyGroup != Difficulty.LittleCharsAfter)
+							{
+								Kana found = foundForChar.Where(k => k.Character.Length == 1).First();
+
+								if (isPreviousLtsu)
+								{
+									res += found.Romaji[0];
+									isPreviousLtsu = false;
+								}
+
+								res += found.Romaji;
+							}
+							else // composed
+							{
+								Kana found = foundForChar.Where(k => k.Character.Contains($"{reading[i]}{reading[i+1]}")).First();
+
+								if (isPreviousLtsu)
+								{
+									res += found.Romaji[0];
+									isPreviousLtsu = false;
+								}
+
+								res += found.Romaji;
+
+								i++;
+							}
+						}
+					}
+					else
+					{
+						res += reading[i];
+					}
 
 					i++;
 				}

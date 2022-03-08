@@ -10,5 +10,6 @@ namespace KanjiDesu.Services
 		public IEnumerable<Kanji> Get(byte? jlpt, bool? exclusive);
 		public IEnumerable<Kanji> GetByReading(string romaji);
 		public IEnumerable<Kanji> GetByMeaning(string meaning);
+		public Kanji Test();
 	}
 }

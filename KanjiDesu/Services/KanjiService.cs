@@ -43,5 +43,11 @@ namespace KanjiDesu.Services
 		{
 			throw new NotImplementedException();
 		}
+
+		public Kanji Test()
+		{
+			KanjiDTO test = new KanjiDTO() { Jlpt = 5, Id = 0, Kanji = "以", KunReadings = "じゃあ-もっててっじゃ", OnReadings = "イ", Meanings = "by means of,because,in view of,compared with", MeaningsFr = "au moyen de,parce que,en vue de,comparé à", Utf = "4EE5" };
+			return new Kanji(test, kanaService.BuildReadings(test.OnReadings), kanaService.BuildReadings(test.KunReadings));
+		}
 	}
 }

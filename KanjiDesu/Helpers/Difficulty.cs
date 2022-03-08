@@ -8,6 +8,7 @@
 		ComposedDakuten,
 		Exotic,
 		LittleCharsAfter = 10,
-		LittleCharsBefore = 11
+		LittleCharsBefore = 11,
+		VowelProlongation = 12
 	}
 }
