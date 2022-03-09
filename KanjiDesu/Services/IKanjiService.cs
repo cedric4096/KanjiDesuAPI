@@ -7,9 +7,7 @@ namespace KanjiDesu.Services
 	/// </summary>
 	public interface IKanjiService
 	{
-		public IEnumerable<Kanji> Get(byte? jlpt, bool? exclusive);
-		public IEnumerable<Kanji> GetByReading(string romaji);
+		public IEnumerable<Kanji> Get(byte? jlpt, bool? exclusive, int? page, int? kanjiPerPage);
 		public IEnumerable<Kanji> GetByMeaning(string meaning);
-		public Kanji Test();
 	}
 }

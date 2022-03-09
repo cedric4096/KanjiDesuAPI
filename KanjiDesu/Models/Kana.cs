@@ -9,7 +9,7 @@ namespace KanjiDesu.Models
 		/// </summary>
 		public string Character { get; set; }
 		/// <summary>
-		/// Gets or sets the romaji transcription for this instance
+		/// Gets or sets the rōmaji transcription for this instance
 		/// </summary>
 		public string Romaji { get; set; }
 		/// <summary>

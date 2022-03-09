@@ -26,7 +26,7 @@ namespace KanjiDesu.Controllers
 		/// Returns all existing kana
 		/// </summary>
 		/// <param name="difficulty">Difficulty of the searched kana</param>
-		/// <param name="search">Romaji string to search in kana</param>
+		/// <param name="search">Rōmaji string to search in kana</param>
 		/// <param name="exclusive">If true, returns kana stricly in the specified difficulty, else returns kana in easier groups</param>
 		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched kana</response>
@@ -52,7 +52,7 @@ namespace KanjiDesu.Controllers
 		/// Returns all existing hiragana
 		/// </summary>
 		/// <param name="difficulty">Difficulty of the searched hiragana</param>
-		/// <param name="search">Romaji string to search in hiragana</param>
+		/// <param name="search">Rōmaji string to search in hiragana</param>
 		/// <param name="exclusive">If true, returns hiragana stricly in the specified difficulty, else returns hiragana in easier groups</param>
 		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched hiragana</response>
@@ -78,7 +78,7 @@ namespace KanjiDesu.Controllers
 		/// Returns all existing katakana
 		/// </summary>
 		/// <param name="difficulty">Difficulty of the searched katakana</param>
-		/// <param name="search">Romaji string to search in katakana</param>
+		/// <param name="search">Rōmaji string to search in katakana</param>
 		/// <param name="exclusive">If true, returns latakana stricly in the specified difficulty, else returns katakana in easier groups</param>
 		/// <returns>An IEnumerable{T} containing searched Kana</returns>
 		/// <response code="200">Returns the searched katakana</response>

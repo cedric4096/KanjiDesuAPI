@@ -22,17 +22,20 @@ namespace KanjiDesu.Controllers
 		}
 
 		/// <summary>
-		/// Returns all existing kanji
+		/// Returns the first 10 existing kanji
 		/// </summary>
 		/// <param name="jlpt">JLPT level of the searched kanji</param>
 		/// <param name="exclusive">If true, returns kanji stricly in the specified JLPT level, else returns kanji in easier levels too</param>
+		/// <param name="page">The page of kanji to load</param>
+		/// <param name="kanjiPerPage">The number of kanji per page, 10 by default</param>
+		/// <remarks>Pagination is based on the results of the jlpt and exclusive arguments, thus pagination may not remain consistent with different parameters</remarks>
 		/// <returns>An IEnumerable{T} containing searched Kanji</returns>
 		/// <response code="200">Returns the searched kanji</response>
 		/// <response code="400">If JLPT level is invalid, or if JLPT level is null and exclusive is provided</response>
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public ActionResult<IEnumerable<Kanji>> GetAll([FromQuery] byte? jlpt, [FromQuery] bool? exclusive)
+		public ActionResult<IEnumerable<Kanji>> GetAll([FromQuery] byte? jlpt, [FromQuery] bool? exclusive, [FromQuery] int page, [FromQuery] int kanjiPerPage)
 		{
 			if (jlpt < 0 || jlpt > 5)
 			{
@@ -43,20 +46,7 @@ namespace KanjiDesu.Controllers
 				return BadRequest("'exclusive' field used without a dificulty group");
 			}
 
-			return Ok(kanjiService.Get(jlpt, exclusive));
-		}
-
-		/// <summary>
-		/// Returns kanji corresponding to the given reading in romaji
-		/// </summary>
-		/// <param name="reading">The reading in romaji of the searched kanji</param>
-		/// <returns>An IEnumerable{T} containing searched Kanji</returns>
-		/// <response code="200">Returns the searched kanji</response>
-		[HttpGet("reading/{reading}")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<IEnumerable<Kanji>> GetByReading(string reading)
-		{
-			return Ok(kanjiService.GetByReading(reading));
+			return Ok(kanjiService.Get(jlpt, exclusive, page, kanjiPerPage));
 		}
 
 		/// <summary>
@@ -70,18 +60,6 @@ namespace KanjiDesu.Controllers
 		public ActionResult<IEnumerable<Kanji>> GetByMeaning(string meaning)
 		{
 			return Ok(kanjiService.GetByMeaning(meaning));
-		}
-
-		/// <summary>
-		/// Returns test kanji
-		/// </summary>
-		/// <returns>Kanji</returns>
-		/// <response code="200">Returns the kanji</response>
-		[HttpGet("test")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<Kanji> Test()
-		{
-			return Ok(kanjiService.Test());
 		}
 	}
 }

@@ -18,36 +18,43 @@ namespace KanjiDesu.Services
 		}
 
 		/// <summary>
-		/// Retrieves all kanji from DB
+		/// Retrieves the first 10 <see cref="Kanji"/> from DB
 		/// </summary>
-		/// <param name="jlpt">JLPT level of the searched kanji</param>
-		/// <param name="exclusive">If <see langword="true"/>, returns kanji stricly in the specified JLPT level, else returns kanji in easier levels too</param>
+		/// <param name="jlpt">JLPT level of the searched <see cref="Kanji"/></param>
+		/// <param name="exclusive">If <see langword="true"/>, returns <see cref="Kanji"/> stricly in the specified JLPT level, else returns <see cref="Kanji"/> in easier levels too</param>
+		/// <param name="page">The page of <see cref="Kanji"/> to load from DB</param>
+		/// <param name="kanjiPerPage">The number of <see cref="Kanji"/> per page, 10 by default</param>
+		/// <remarks>Pagination is based on the results of the <paramref name="jlpt"/> and <paramref name="exclusive"/> arguments, thus pagination may not remain consistent with different parameters</remarks>
 		/// <returns>An <see cref="IEnumerable{T}"/> containing searched <see cref="Kanji"/></returns>
-		public IEnumerable<Kanji> Get(byte? jlpt, bool? exclusive)
+		public IEnumerable<Kanji> Get(byte? jlpt, bool? exclusive, int? page, int? kanjiPerPage)
 		{
-			return context.Kanjis
-				.Where(kanji => 
+			List<KanjiDTO> kanjis = context.Kanjis
+				.Where(kanji =>
 					jlpt == null
 					|| ((exclusive == null || !(bool)exclusive) && kanji.Jlpt >= jlpt)
 					|| (exclusive != null && (bool)exclusive && kanji.Jlpt == jlpt)
-				)
-				.Select(kanji => new Kanji(kanji, kanaService.BuildReadings(kanji.OnReadings), kanaService.BuildReadings(kanji.KunReadings)));
+				).OrderBy(kanji => kanji.Id)
+				.Skip(((int)kanjiPerPage != 0 ? (int)kanjiPerPage : 10) * (int)page)
+				.Take((int)kanjiPerPage != 0 ? (int)kanjiPerPage : 10)
+				.ToList();
+				
+			return kanjis.Select(kanji => new Kanji(kanji, kanaService.BuildReadings(kanji.OnReadings), kanaService.BuildReadings(kanji.KunReadings)));
 		}
 
+		/// <summary>
+		/// Returns <see cref="Kanji"/> corresponding to the given meaning
+		/// </summary>
+		/// <param name="meaning">Meaning of the searched <see cref="Kanji"/></param>
+		/// <returns>An <see cref="IEnumerable{T}"/> containing searched <see cref="Kanji"/></returns>
 		public IEnumerable<Kanji> GetByMeaning(string meaning)
 		{
-			throw new NotImplementedException();
-		}
+			List<KanjiDTO> kanjis = context.Kanjis
+				.Where(kanji => 
+					kanji.Meanings.Contains(meaning)
+					|| (!string.IsNullOrEmpty(kanji.MeaningsFr) && kanji.MeaningsFr.Contains(meaning))
+				).ToList();
 
-		public IEnumerable<Kanji> GetByReading(string romaji)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Kanji Test()
-		{
-			KanjiDTO test = new KanjiDTO() { Jlpt = 5, Id = 0, Kanji = "以", KunReadings = "じゃあ-もっててっじゃ", OnReadings = "イ", Meanings = "by means of,because,in view of,compared with", MeaningsFr = "au moyen de,parce que,en vue de,comparé à", Utf = "4EE5" };
-			return new Kanji(test, kanaService.BuildReadings(test.OnReadings), kanaService.BuildReadings(test.KunReadings));
+			return kanjis.Select(kanji => new Kanji(kanji, kanaService.BuildReadings(kanji.OnReadings), kanaService.BuildReadings(kanji.KunReadings)));
 		}
 	}
 }
