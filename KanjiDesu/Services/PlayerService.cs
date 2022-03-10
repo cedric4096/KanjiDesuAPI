@@ -22,15 +22,15 @@ namespace KanjiDesu.Services
 		/// <param name="bestScore">The best score for the new <see cref="Player"/></param>
 		/// <returns>The created <see cref="Player"/></returns>
 		/// <exception cref="ArgumentException"/>
-		public Player Create(string pseudo, int? bestScore)
+		public async Task<Player> Create(string pseudo, int? bestScore)
 		{
 			if (context.Players.Where(player => player.Pseudo == pseudo).Count() != 0)
 			{
 				throw new ArgumentException("The pseudonym already exists");
 			}
 
-			context.Players.Add(new PlayerDTO() { Pseudo = pseudo, BestScore = (int)bestScore });
-			context.SaveChanges();
+			context.Players.Add(new PlayerDTO() { Pseudo = pseudo, BestScore = bestScore });
+			await context.SaveChangesAsync();
 
 			return Get(pseudo);
 		}
@@ -40,7 +40,7 @@ namespace KanjiDesu.Services
 		/// </summary>
 		/// <param name="pseudo">The pseudonym of the <see cref="Player"/> to delete</param>
 		/// <exception cref="KeyNotFoundException"/>
-		public void Delete(string pseudo)
+		public async Task Delete(string pseudo)
 		{
 			try
 			{
@@ -49,7 +49,7 @@ namespace KanjiDesu.Services
 						.Where(player => player.Pseudo == pseudo)
 						.First()
 				);
-				context.SaveChanges();
+				await context.SaveChangesAsync();
 			}
 			catch (InvalidOperationException)
 			{
@@ -69,7 +69,7 @@ namespace KanjiDesu.Services
 			{
 				return context.Players
 					.Where(player => player.Pseudo == pseudo)
-					.Select(dto => new Player(dto.Pseudo, (int)dto.BestScore))
+					.Select(dto => new Player(dto.Pseudo, dto.BestScore != null ? (int)dto.BestScore : 0))
 					.First();
 			}
 			catch (InvalidOperationException)
@@ -85,7 +85,7 @@ namespace KanjiDesu.Services
 		/// <param name="bestScore">The new best score for the <see cref="Player"/></param>
 		/// <returns>The updated <see cref="Player"/></returns>
 		/// <exception cref="KeyNotFoundException"/>
-		public Player Update(string pseudo, int? bestScore)
+		public async Task<Player> Update(string pseudo, int? bestScore)
 		{
 			try
 			{
@@ -93,7 +93,7 @@ namespace KanjiDesu.Services
 					.Where(player => player.Pseudo == pseudo)
 					.First()
 					.BestScore = bestScore;
-				context.SaveChanges();
+				await context.SaveChangesAsync();
 
 				return Get(pseudo);
 			}

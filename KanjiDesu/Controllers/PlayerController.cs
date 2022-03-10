@@ -55,11 +55,11 @@ namespace KanjiDesu.Controllers
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public ActionResult<Player> Post([FromQuery] string pseudo, [FromQuery] int? bestScore)
+		public async Task<ActionResult<Player>> Post([FromQuery] string pseudo, [FromQuery] int? bestScore)
 		{
 			try
 			{
-				return Created($"/api/player/{pseudo}", playerService.Create(pseudo, bestScore));
+				return Created($"/api/player/{pseudo}", await playerService.Create(pseudo, bestScore));
 			}
 			catch (ArgumentException)
 			{
@@ -78,11 +78,11 @@ namespace KanjiDesu.Controllers
 		[HttpPut("{pseudo}")]
 		[ProducesResponseType(StatusCodes.Status202Accepted)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<Player> Put(string pseudo, [FromQuery] int? bestScore)
+		public async Task<ActionResult<Player>> Put(string pseudo, [FromQuery] int? bestScore)
 		{
 			try
 			{
-				return Accepted(playerService.Update(pseudo, bestScore));
+				return Accepted(await playerService.Update(pseudo, bestScore));
 			}
 			catch (KeyNotFoundException)
 			{
@@ -99,11 +99,11 @@ namespace KanjiDesu.Controllers
 		[HttpDelete("{pseudo}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult Delete(string pseudo)
+		public async Task<ActionResult> Delete(string pseudo)
 		{
 			try
 			{
-				playerService.Delete(pseudo);
+				await playerService.Delete(pseudo);
 				return Ok();
 			}
 			catch (KeyNotFoundException)

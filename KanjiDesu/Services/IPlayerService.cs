@@ -8,8 +8,8 @@ namespace KanjiDesu.Services
 	public interface IPlayerService
 	{
 		public Player Get(string pseudo);
-		public Player Create(string pseudo, int? bestScore);
-		public Player Update(string pseudo, int? bestScore);
-		public void Delete(string pseudo);
+		public Task<Player> Create(string pseudo, int? bestScore);
+		public Task<Player> Update(string pseudo, int? bestScore);
+		public Task Delete(string pseudo);
 	}
 }

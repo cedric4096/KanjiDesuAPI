@@ -16,9 +16,9 @@ namespace KanjiDesu.DataModels
         {
         }
 
-        public virtual DbSet<Kana> Kanas { get; set; } = null!;
-        public virtual DbSet<Kanji> Kanjis { get; set; } = null!;
-        public virtual DbSet<Player> Players { get; set; } = null!;
+        public virtual DbSet<KanaDTO> Kanas { get; set; } = null!;
+        public virtual DbSet<KanjiDTO> Kanjis { get; set; } = null!;
+        public virtual DbSet<PlayerDTO> Players { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,7 +30,7 @@ namespace KanjiDesu.DataModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Kana>(entity =>
+            modelBuilder.Entity<KanaDTO>(entity =>
             {
                 entity.ToTable("kana");
 
@@ -43,7 +43,7 @@ namespace KanjiDesu.DataModels
 
                 entity.Property(e => e.IsHiragana).HasColumnName("is_hiragana");
 
-                entity.Property(e => e.Kana1)
+                entity.Property(e => e.Kana)
                     .HasMaxLength(4)
                     .HasColumnName("kana");
 
@@ -56,7 +56,7 @@ namespace KanjiDesu.DataModels
                     .HasColumnName("utf");
             });
 
-            modelBuilder.Entity<Kanji>(entity =>
+            modelBuilder.Entity<KanjiDTO>(entity =>
             {
                 entity.ToTable("kanji");
 
@@ -65,17 +65,17 @@ namespace KanjiDesu.DataModels
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.JaKun)
+                entity.Property(e => e.KunReadings)
                     .HasMaxLength(4000)
                     .HasColumnName("ja_kun");
 
-                entity.Property(e => e.JaOn)
+                entity.Property(e => e.OnReadings)
                     .HasMaxLength(4000)
                     .HasColumnName("ja_on");
 
                 entity.Property(e => e.Jlpt).HasColumnName("jlpt");
 
-                entity.Property(e => e.Kanji1)
+                entity.Property(e => e.Kanji)
                     .HasMaxLength(2)
                     .HasColumnName("kanji");
 
@@ -92,7 +92,7 @@ namespace KanjiDesu.DataModels
                     .HasColumnName("utf");
             });
 
-            modelBuilder.Entity<Player>(entity =>
+            modelBuilder.Entity<PlayerDTO>(entity =>
             {
                 entity.ToTable("player");
 
