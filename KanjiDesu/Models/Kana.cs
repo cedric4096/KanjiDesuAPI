@@ -2,6 +2,9 @@
 
 namespace KanjiDesu.Models
 {
+	/// <summary>
+	/// Represents a kana
+	/// </summary>
 	public class Kana
 	{
 		/// <summary>

@@ -1,91 +1,116 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace KanjiDesu.DataModels
 {
-	public partial class KanjiDesuContext : DbContext
-	{
-		public KanjiDesuContext(DbContextOptions<KanjiDesuContext> options)
-			: base(options)
-		{}
+    public partial class KanjiDesuContext : DbContext
+    {
+        public KanjiDesuContext()
+        {
+        }
 
-		public virtual DbSet<KanaDTO> Kanas { get; set; } = null!;
-		public virtual DbSet<KanjiDTO> Kanjis { get; set; } = null!;
+        public KanjiDesuContext(DbContextOptions<KanjiDesuContext> options)
+            : base(options)
+        {
+        }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				optionsBuilder.UseSqlServer("Server=tcp:kanjidesuserver.database.windows.net,1433;Initial Catalog=kanjidesudb;Persist Security Info=False;User ID=kanjidesuadmin;Password=kanjidesustrongpassw0Rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-			}
-		}
+        public virtual DbSet<Kana> Kanas { get; set; } = null!;
+        public virtual DbSet<Kanji> Kanjis { get; set; } = null!;
+        public virtual DbSet<Player> Players { get; set; } = null!;
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			modelBuilder.Entity<KanaDTO>(entity =>
-			{
-				entity.ToTable("kana");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=tcp:kanjidesuserver.database.windows.net,1433;Initial Catalog=kanjidesudb;Persist Security Info=False;User ID=kanjidesuadmin;Password=kanjidesustrongpassw0Rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            }
+        }
 
-				entity.HasIndex(e => e.Utf, "UQ__kana__DD7774CFD0E45F2D")
-					.IsUnique();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Kana>(entity =>
+            {
+                entity.ToTable("kana");
 
-				entity.Property(e => e.Id).HasColumnName("id");
+                entity.HasIndex(e => e.Utf, "UQ__kana__DD7774CFAD3BC51E")
+                    .IsUnique();
 
-				entity.Property(e => e.DifficultyGroup).HasColumnName("difficulty_group");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-				entity.Property(e => e.IsHiragana).HasColumnName("is_hiragana");
+                entity.Property(e => e.DifficultyGroup).HasColumnName("difficulty_group");
 
-				entity.Property(e => e.Kana)
-					.HasMaxLength(4)
-					.HasColumnName("kana");
+                entity.Property(e => e.IsHiragana).HasColumnName("is_hiragana");
 
-				entity.Property(e => e.Romaji)
-					.HasMaxLength(10)
-					.HasColumnName("romaji");
+                entity.Property(e => e.Kana1)
+                    .HasMaxLength(4)
+                    .HasColumnName("kana");
 
-				entity.Property(e => e.Utf)
-					.HasMaxLength(32)
-					.HasColumnName("utf");
-			});
+                entity.Property(e => e.Romaji)
+                    .HasMaxLength(10)
+                    .HasColumnName("romaji");
 
-			modelBuilder.Entity<KanjiDTO>(entity =>
-			{
-				entity.ToTable("kanji");
+                entity.Property(e => e.Utf)
+                    .HasMaxLength(32)
+                    .HasColumnName("utf");
+            });
 
-				entity.HasIndex(e => e.Utf, "UQ__kanji__DD7774CF40D4C500")
-					.IsUnique();
+            modelBuilder.Entity<Kanji>(entity =>
+            {
+                entity.ToTable("kanji");
 
-				entity.Property(e => e.Id).HasColumnName("id");
+                entity.HasIndex(e => e.Utf, "UQ__kanji__DD7774CF3F69E2DA")
+                    .IsUnique();
 
-				entity.Property(e => e.KunReadings)
-					.HasMaxLength(4000)
-					.HasColumnName("ja_kun");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-				entity.Property(e => e.OnReadings)
-					.HasMaxLength(4000)
-					.HasColumnName("ja_on");
+                entity.Property(e => e.JaKun)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ja_kun");
 
-				entity.Property(e => e.Jlpt).HasColumnName("jlpt");
+                entity.Property(e => e.JaOn)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ja_on");
 
-				entity.Property(e => e.Kanji)
-					.HasMaxLength(2)
-					.HasColumnName("kanji");
+                entity.Property(e => e.Jlpt).HasColumnName("jlpt");
 
-				entity.Property(e => e.Meanings)
-					.HasMaxLength(4000)
-					.HasColumnName("meanings");
+                entity.Property(e => e.Kanji1)
+                    .HasMaxLength(2)
+                    .HasColumnName("kanji");
 
-				entity.Property(e => e.MeaningsFr)
-					.HasMaxLength(4000)
-					.HasColumnName("meanings_fr");
+                entity.Property(e => e.Meanings)
+                    .HasMaxLength(4000)
+                    .HasColumnName("meanings");
 
-				entity.Property(e => e.Utf)
-					.HasMaxLength(32)
-					.HasColumnName("utf");
-			});
+                entity.Property(e => e.MeaningsFr)
+                    .HasMaxLength(4000)
+                    .HasColumnName("meanings_fr");
 
-			OnModelCreatingPartial(modelBuilder);
-		}
+                entity.Property(e => e.Utf)
+                    .HasMaxLength(32)
+                    .HasColumnName("utf");
+            });
 
-		partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-	}
+            modelBuilder.Entity<Player>(entity =>
+            {
+                entity.ToTable("player");
+
+                entity.HasIndex(e => e.Pseudo, "UQ__player__EA0EEA226C9080C9")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.BestScore).HasColumnName("best_score");
+
+                entity.Property(e => e.Pseudo)
+                    .HasMaxLength(60)
+                    .HasColumnName("pseudo");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
 }
